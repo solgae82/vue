@@ -1,0 +1,44 @@
+<html>
+<head>
+    <title>Vue 하위-상위 컴포넌트 EVEN 실습</title>
+</head>
+<body>
+  <!-- 하위 컴포넌트 >> 상위 컴포넌트, 이벤트 전달 수신하기
+
+  1. 이벤트 발생 : this.$emit('이벤트명')
+  2. 수신 : v-on:이벤트명="상위 컴포넌트 메서드명"
+
+-->
+  <div id="app">
+    <child-component1 v-on:show-alert="printTxt" ></child-component1>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+  <script>
+
+      Vue.component('child-component1',{
+        template : '<div><button v-on:click="showLog">부모 컴포넌트호출</button></div>',
+        methods:{
+          showLog : function(){
+            this.$emit('show-alert');
+          }
+        }
+      });
+
+
+      new Vue({
+        el: "#app",
+        data:{
+          msg : '야 놀자!'
+        },
+        methods:{
+          printTxt: function(){
+            alert('부모 메서드 호출:' + this.msg);
+          }
+        }
+
+      });
+  </script>
+</body>
+</html>

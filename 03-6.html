@@ -1,0 +1,42 @@
+<html>
+<head>
+    <title>Vue Component 직정참조 불가 실습</title>
+</head>
+<body>
+  <!-- 컴포넌트간의 직접 참조는 불가능하다
+  컴포넌트간에도 각 고유한 범위(scope)가 있다
+-->
+  <div id="app">
+    <my-component1></my-component1>
+    <my-component2></my-component2>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+  <script>
+
+     var cmp1 = {
+       template: '<p>my 지역 컴포넌트1 : {{cmp1Data}}</p>',
+       data : function(){
+         return{
+           cmp1Data : 100
+         }
+       }
+     };
+     var cmp2 = {
+       template: '<p>my 지역 컴포넌트2 : {{cmp2Data}}</p>',
+       data : function(){
+         return{
+           cmp2Data : cmp1.data.cmp1Data /* 참조 가능할 것같지만 안 된다*/
+         }
+       }
+     };
+      new Vue({
+        el: "#app",
+        components: {
+          'my-component1': cmp1,
+          'my-component2': cmp2
+        }
+      });
+  </script>
+</body>
+</html>
