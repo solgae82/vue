@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>http ajax (axios) 예제</title>
+</head>
+<body>
+
+  <div id="app">
+    <button type="button" v-on:click="getData">axios(가져오기) 버튼</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+  <!--  axios 로드-->
+  <script src="https:/unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+
+    new Vue({
+
+      el: '#app',
+      methods:{
+        getData: function(){
+          var url = 'https://raw.githubusercontent.com/joshua1988/doit-vuejs/master/data/demo.json';
+          axios.get(url).then(function(response){
+            console.log(response); //{data: {…}, status: 200, statusText: '', headers: {…}, config: {…}, …}
+            console.log(response.data);//{fe1: 'Angular', fe2: 'React', fe3: 'Vue.js',..}
+          });
+        }
+      }
+    });
+
+  </script>
+</body>
+</html>
