@@ -1,0 +1,37 @@
+<html>
+<head>
+    <title>뷰템플릿 - (2) v-bind </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <style>
+      .bClass {border: 1px solid blue;}
+    </style>
+</head>
+<body>
+
+
+  <!--
+    id, class, style 등 html 태그 속성값에 뷰 데이터 값 연결시 사용
+  -->
+  <div id="app">
+    <p v-bind:id="idA">id속성</p>
+    <p v-bind:class="classB">class속성</p>
+    <p v-bind:style="styleC">style속성</p>
+  </div>
+  <script>
+
+    new Vue({
+
+      el: '#app',
+      data:{
+        idA : 'first',
+        classB : 'bClass',
+        styleC : 'color: red'
+      }
+    });
+
+  </script>
+
+
+
+</body>
+</html>

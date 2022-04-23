@@ -1,0 +1,66 @@
+<html>
+<head>
+    <title>뷰템플릿 - (1) 데이터 바인딩</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+</head>
+<body>
+
+  <!-- 스타일 1 -->
+  <!--
+    뷰 반응성에 의해 vue 내부의 데이터가 바뀌면 html에 바인딩 된 값도 바뀐다.
+    
+    <div id="app1" v-once>
+    v-once 속성을 쓰면 버튼을 눌러도 html은 바뀌지 않는다
+  -->
+  <div id="app1">
+    <h3>{{message}}</h3>
+    <button v-on:click="chHi">Hi로 변경</button>
+  </div>
+  <script>
+
+    new Vue({
+
+      el: '#app1',
+      data:{
+        message : 'Hello Vue js! (1)',
+        count : 1
+      },
+      methods:{
+        chHi :function(){this.message = 'Hi' + this.count++ ;}
+      }
+    });
+
+  </script>
+
+  <!--스타일 2 -->
+
+  <div id="app2"></div>
+  <script>
+    new Vue({
+
+      el : '#app2',
+      data:{
+        message : 'Hello Vue js (2)'
+      },
+      template : '<h3>{{message}}</h3>'
+    });
+  </script>
+
+  <!-- 스타일 3 (싱글파일 컴포넌트 체계)
+      .vue 파일로 프로젝트를 구성하는 방식
+      .vue 파일 1개는 뷰 애플리케이션 1개의 컴포넌트와 동일하다
+
+      <template>
+        html 태그 내용
+      </template>
+      <script>
+       자바스크립트 내용
+      </script>
+      <style>
+        CSS 스타일 내용
+      </style>
+-->
+
+
+</body>
+</html>
