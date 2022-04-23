@@ -7,15 +7,14 @@
     </style>
 </head>
 <body>
-
-
   <!--
     id, class, style 등 html 태그 속성값에 뷰 데이터 값 연결시 사용
+    v-bind:style -> :style 로 줄일 수 있다
   -->
   <div id="app">
     <p v-bind:id="idA">id속성</p>
     <p v-bind:class="classB">class속성</p>
-    <p v-bind:style="styleC">style속성</p>
+    <p :style="styleC">style속성</p>
   </div>
   <script>
 
@@ -30,8 +29,5 @@
     });
 
   </script>
-
-
-
 </body>
 </html>
