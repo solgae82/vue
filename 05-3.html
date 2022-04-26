@@ -1,0 +1,47 @@
+<html>
+<head>
+    <title>뷰템플릿 - (3) 표현식 </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <style>
+      .bClass {border: 1px solid blue;}
+    </style>
+</head>
+<body>
+  <!--
+    자바스크립트 표현식 :
+    {{ 자바스크립트 표현식}}
+    선언, 제어문등을 제외한 간단한 연산 표현식만 가능
+    (제어문 중 삼항연산자만 가능)
+
+    삼항연산자 가능
+    메소드 호출 가능,체인 호출 가능
+    사칙연산 가능
+    문자열 연산 가능
+    등등..
+  -->
+  <div id="app">
+    <p>{{message}}</p>
+    <p>{{message + '!!!'}}</p>
+    <p>{{message.split('').reverse().join('')}}</p>
+    <p>{{sayHi()}}</p><!--표현식 {{}}에서 메소드는 ()를 붙여야 한다 -->
+    <p>{{add(2)}}</p>
+  </div>
+  <script>
+
+    new Vue({
+
+      el: '#app',
+      data:{
+        message: 'Hello Vue.js!'
+      },
+      methods:{
+        sayHi: function(){return 'Hi';},
+        add:function(num ){
+          return num + 3;
+        }
+      }
+    });
+
+  </script>
+</body>
+</html>
