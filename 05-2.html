@@ -11,7 +11,7 @@
     id, class, style 등 html 태그 속성값에 뷰 데이터 값 연결시 사용
     v-bind:style -> :style 로 줄일 수 있다
   -->
-  <div id="app">
+  <div id="app1">
     <p v-bind:id="idA">id속성</p>
     <p v-bind:class="classB">class속성</p>
     <p :style="styleC">style속성</p>
@@ -20,11 +20,36 @@
 
     new Vue({
 
-      el: '#app',
+      el: '#app1',
       data:{
         idA : 'first',
         classB : 'bClass',
         styleC : 'color: red'
+      }
+    });
+
+  </script>
+
+  <!--
+    v-once 속성을 설정하면,
+    바인딩 된 결과를 처음 한번만 적용하고 다음 변경부터는 적용되지 않는다
+  -->
+  <div id="app2" v-once> <!-- v-once를 제거하면 잘 변경된다 -->
+    {{message}}
+    <button v-on:click="change">변경</button>
+  </div>
+  <script>
+
+    new Vue({
+
+      el: '#app2',
+      data:{
+        message : 'Hi',
+      },
+      methods:{
+        change : function(){
+          this.message = 'Hello!';
+        }
       }
     });
 

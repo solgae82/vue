@@ -22,10 +22,18 @@ template 속성
 
   3. 싱글파일 컴포넌트 체계
 
-      <!-- ES6 : 싱글 파일 컴포넌트 체계 -->
+      .vue 파일로 프로젝트를 구성하는 방식
+      .vue 파일 1개는 뷰 애플리케이션 1개의 컴포넌트와 동일하다
+
       <template>
-            <h3>{{message}}</h3>
+          html 태그 내용
       </template>
+      <script>
+          자바스크립트 내용
+      </script>
+      <style>
+          CSS 스타일 내용
+      </style>
 
 템플릿 뷰의 속성과 문법
 
@@ -35,4 +43,105 @@ template 속성
   - 이벤트 처리
   - 고급 템플릿 기법
 
-  
+  1. 데이터 바인딩
+
+      - {{}} - 콧수염 괄호
+          뷰데이터의 message 를 {{message}} 에 바인딩하여 실시간 데이터 변경이 가능하다
+
+          ex)
+            <div id="app"><h3>{{message}}</h3></div>
+            <script>
+              new Vue({el:'#app',data{message:'Hi'}});
+            </script>
+
+          ex) 뷰데이터를 처음 한번만 적용하고 싶다면, 'v-once' 속성을 명시한다
+            <div id="app" v-once>
+              <h3>{{message}}</h3> <!-- 처음 변경된 값을 계속 유지한다 -->
+              <button v-on:click="change">변경</button> <!-- 뷰데이터는 변경되지만, {{message}} 값은 바뀌지 않는다 -->
+            </div>
+            <script>
+              new Vue({
+                el:'#app',
+                data{message:'Hi'},
+                methods:{
+                  change : function(){
+                    this.message = 'Hello!';
+                  }
+                }
+              });
+            </script>
+
+      - v-bind
+          id, class, style 등 html 태그 속성값에 뷰 데이터 값 연결시 사용
+          v-bind:style -> :style 로 줄일 수 있다
+
+          ex)
+          <div id="app">
+            <p v-bind:id="idA">id속성</p> <!-- id="first" -->
+            <p v-bind:class="classB">class속성</p ><!-- class="bClass" -->
+            <p :style="styleC">style속성</p> <!- style="color: red" -->
+          </div>
+          <script>
+            new Vue({
+              el: '#app',
+              data:{
+                idA : 'first',
+                classB : 'bClass',
+                styleC : 'color: red'
+              }
+            });
+
+          </script>
+    2. 자바스크립트 표현식
+
+        선언, 제어문등을 제외한 간단한 연산 표현식만 가능
+        (제어문 중 삼항연산자만 가능)
+
+        삼항연산자 가능
+        메소드 호출 가능,체인 호출 가능
+        사칙연산 가능
+        문자열 연산 가능
+        등등..
+
+        ex)
+          <div id="app">
+            <p>{{message}}</p>
+            <p>{{message + '!!!'}}</p>
+            <p>{{message.split('').reverse().join('')}}</p>
+            <p>{{sayHi()}}</p><!--표현식 {{}}에서 메소드는 ()를 붙여야 한다 -->
+            <p>{{add(2)}}</p>
+          </div>
+          <script>
+
+            new Vue({
+
+              el: '#app',
+              data:{
+                message: 'Hello Vue.js!'
+              },
+              methods:{
+                sayHi: function(){return 'Hi';},
+                add:function(num ){
+                  return num + 3;
+                }
+              }
+            });
+
+          </script>
+
+        3. 디렉티브
+          html 태그안에 v- 접두사가 붙은 모든 속성을 의미한다.
+
+          - v-if
+            뷰데이터의 참/거짓 값에 따라 태그를 출력 또는 출력 하지 않는다.
+          - v-for
+            뷰데이터의 갯수만큼  태그를 반복 출력한다
+          - v-show
+            데이터의 참/거짓 값에 따라 태그 CSS의 display:none 적용을 한다. (표시/숨김)
+          - v-bind
+            태그 기본 속성과 뷰 데이터 속성 바인딩시 사용
+          - v-on
+            요소의 event를 처리할 때 사용한다
+          - v-model
+            폼 태그 중 input select textarea 사용 가능
+            폼 입력값을 뷰데이터와 즉시 동기화 한다
