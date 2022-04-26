@@ -1,0 +1,89 @@
+<html>
+<head>
+    <title>뷰템플릿 - (4) 디렉티브 </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <style>
+      .bClass {border: 1px solid blue;}
+    </style>
+</head>
+<body>
+  <!--
+  html 태그안에 v- 접두사가 붙은 모든 속성을 의미한다.
+
+  - v-if
+    뷰데이터의 참/거짓 값에 따라 태그를 출력 또는 출력 하지 않는다.
+
+  - v-for
+    뷰데이터의 갯수만큼  태그를 반복 출력한다
+
+  - v-show
+    데이터의 참/거짓 값에 따라 태그 CSS의 display:none 적용을 한다. (표시/숨김)
+
+  - v-bind
+    태그 기본 속성과 뷰 데이터 속성 바인딩시 사용
+
+  - v-on
+    요소의 event를 처리할 때 사용한다
+
+  - v-model
+    이벤트 양방향 사용
+    폼 태그 중 input select textarea 사용 가능
+    폼 입력값을 뷰데이터와 즉시 동기화 한다
+  -->
+  <div id="app">
+    <h3 v-if="flag">v-if: Vue.js</h3>
+    <h3 v-show="flag">v-show: Vue.js</h3>
+    <ul>
+      <li v-for="s in systems">{{s}}</li>
+    </ul>
+    <h3 v-bind:id="uid">v-bind:id = 10</h3>
+    <button v-on:click="popupAlert($event, 'Hi')">경고창 출력</button><br/>
+
+    <hr />
+    <!--
+      이벤트 양방향 동기화 구현 방식
+      1. v-bind:value 와 v-on:keyup 구현 방식
+      2. v-model 구현 방식
+
+    --->
+    <!-- 수동으로 구현한 이벤트 양방향 동기화 -->
+    <input type="text" v-bind:value="message" v-on:keyup="syscText" />
+    <!-- v-model 로 구현한 이벤트 양방향 동기화
+      (단, 이 방식은 한글 입력시 다른 동기화 출력이 1문자 늦게 출력되는 버그가 있는 듯)
+    -->
+    <input type="text" v-model="message" />
+    <h3>{{message}}</h3>
+    <hr />
+    <div v-if="number === 0">0이다</div>
+    <div v-if="number === 1">1이다</div>
+    <div v-if="number > 1">1초과</div>
+    <button v-on:click="plus">숫자 증가</button>
+  </div>
+  <script>
+
+    new Vue({
+
+      el: '#app',
+      data:{
+        flag: false,
+        systems: ['android', 'ios', 'windows'],
+        uid : 10,
+        message : '',
+        number : 0
+      },
+      methods:{
+        popupAlert : function(event , greeting){
+          console.log(event);
+          alert('경고창 표시:' + greeting) ;
+        },
+        syscText:function(event){
+          this.message = event.target.value;
+
+        },
+        plus:function(){this.number++;}
+      }
+    });
+
+  </script>
+</body>
+</html>

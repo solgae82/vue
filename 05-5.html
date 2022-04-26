@@ -1,0 +1,50 @@
+<html>
+<head>
+    <title>뷰템플릿 - (5)이벤트 처리 </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+
+</head>
+<body>
+  <!--
+  v-on:이벤트명 또는 @:이벤트명
+  또는
+  v-on:이벤트명.수식어
+              .stop
+              .prevent
+              .capture
+              .self
+              .once
+              .passive
+  -->
+  <div id="app">
+    <button v-on:click="clickBtn1">기본</button>
+    <button v-on:click="clickBtn2">이벤트 로그 출력</button>
+    <button v-on:click="clickBtn3('Hi')">인수전달</button>
+    <button v-on:click="clickBtn4($event, 'Hello')">이벤트+인수 전달</button>
+  </div>
+  <script>
+
+    new Vue({
+      el: '#app',
+      methods:{
+        clickBtn1:function(){
+          alert('기본');
+        },
+        clickBtn2:function(event){
+
+          console.log(event);
+        },
+        clickBtn3:function(str){
+            alert(str);
+        },
+        clickBtn4:function(event, str){
+          console.log(event);
+          alert(str);
+        }
+
+      }
+    });
+
+  </script>
+</body>
+</html>

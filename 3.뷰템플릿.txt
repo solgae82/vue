@@ -73,7 +73,7 @@ template 속성
 
       - v-bind
           id, class, style 등 html 태그 속성값에 뷰 데이터 값 연결시 사용
-          v-bind:style -> :style 로 줄일 수 있다
+          v-bind:style 또는 :style 로 줄일 수 있다
 
           ex)
           <div id="app">
@@ -92,56 +92,260 @@ template 속성
             });
 
           </script>
-    2. 자바스크립트 표현식
+  2. 자바스크립트 표현식
 
-        선언, 제어문등을 제외한 간단한 연산 표현식만 가능
-        (제어문 중 삼항연산자만 가능)
+      선언, 제어문등을 제외한 간단한 연산 표현식만 가능
+      (제어문 중 삼항연산자만 가능)
 
-        삼항연산자 가능
-        메소드 호출 가능,체인 호출 가능
-        사칙연산 가능
-        문자열 연산 가능
-        등등..
+      삼항연산자 가능
+      메소드 호출 가능,체인 호출 가능
+      사칙연산 가능
+      문자열 연산 가능
+      등등..
 
-        ex)
-          <div id="app">
-            <p>{{message}}</p>
-            <p>{{message + '!!!'}}</p>
-            <p>{{message.split('').reverse().join('')}}</p>
-            <p>{{sayHi()}}</p><!--표현식 {{}}에서 메소드는 ()를 붙여야 한다 -->
-            <p>{{add(2)}}</p>
-          </div>
-          <script>
+      ex)
+        <div id="app">
+          <p>{{message}}</p>
+          <p>{{message + '!!!'}}</p>
+          <p>{{message.split('').reverse().join('')}}</p>
+          <p>{{sayHi()}}</p><!--표현식 {{}}에서 메소드는 ()를 붙여야 한다 -->
+          <p>{{add(2)}}</p>
+        </div>
+        <script>
 
-            new Vue({
+          new Vue({
 
-              el: '#app',
-              data:{
-                message: 'Hello Vue.js!'
-              },
-              methods:{
-                sayHi: function(){return 'Hi';},
-                add:function(num ){
-                  return num + 3;
-                }
+            el: '#app',
+            data:{
+              message: 'Hello Vue.js!'
+            },
+            methods:{
+              sayHi: function(){return 'Hi';},
+              add:function(num ){
+                return num + 3;
               }
-            });
+            }
+          });
 
-          </script>
+        </script>
 
-        3. 디렉티브
-          html 태그안에 v- 접두사가 붙은 모든 속성을 의미한다.
 
-          - v-if
+  3. 디렉티브
+
+        html 태그안에 v- 접두사가 붙은 모든 속성을 의미한다.
+
+        1) v-if , v-else-if , v-else
             뷰데이터의 참/거짓 값에 따라 태그를 출력 또는 출력 하지 않는다.
-          - v-for
+
+            <div id="app">
+              <div v-if="number === 0">0이다</div>
+              <div v-if="number === 1">1이다</div>
+              <div v-if="number > 1">1초과</div>
+              <button v-on:click="plus">숫자 증가</button>
+            </div>
+            <script>
+              new Vue({
+                el: '#app',
+                data:{
+                    number : 0
+                },
+                methods:{
+                  plus:function(){this.number++;}
+                }
+              });
+
+            </script>
+
+        2) v-for
             뷰데이터의 갯수만큼  태그를 반복 출력한다
-          - v-show
+
+            ex 1) 기본
+                <ul>
+                  <li v-for="s in systems">{{s}}</li>
+                </ul>
+                data:{
+                  systems: ['android', 'ios', 'windows']
+                }
+
+            ex 2) :key 속성 설정
+                <ul>
+                  <li v-for="(f, index) in fruits" :key="fruits.id">{{index}}. {{f.name}} , {{f.color}}</li>
+                </ul>
+
+                data: {
+                    fruits:[
+                        {id:1, name:'사과',color:'빨강'},
+                        {id:2, name:'바나나',color:'노랑'},
+                        {id:3, name:'포도',color:'검정'}
+                    ]
+
+                }
+
+        3) v-show
             데이터의 참/거짓 값에 따라 태그 CSS의 display:none 적용을 한다. (표시/숨김)
-          - v-bind
+
+              <div id="app">
+                <!--
+                  flag: true =>  <h3>Vue.js</h3> 출력
+                  flag: false => <h3 style="disply: none;">Vue.js</h3> 출력
+                -->
+                <h3 v-show="flag">Vue.js</h3>
+              </div>
+              <script>
+                new Vue({
+                    el: '#app',
+                    data:{
+                      flag: true
+                    }
+                });
+              </script>
+
+        4) v-bind
+
             태그 기본 속성과 뷰 데이터 속성 바인딩시 사용
-          - v-on
+            (위에서 설명 했음)
+
+        5) v-on
+
             요소의 event를 처리할 때 사용한다
-          - v-model
+            v-on:이벤트명 또는 @:이벤트명
+            또는
+            v-on:이벤트명.수식어
+                        .stop
+                        .prevent
+                        .capture
+                        .self
+                        .once
+                        .passive
+
+                ex 1) 기본 형식
+                    <button v-on:click="popup">경고창1 출력</button>
+                    <button v-on:click="popup()">경고창2 출력</button>
+                    methods:{
+                      popup : function(){
+                        alert('경고창 표시') ;
+                      }
+                    }
+
+                ex 2) 이벤트 변수 받기
+                    <button v-on:click="popup">경고창 출력</button>
+                    methods:{
+                      popup : function(event){
+                        console.log(event); //vue 이벤트 객체 출력
+                        alert('경고창 표시') ;
+                      }
+                    }
+
+                ex 3) 일반 파라미터 전달
+                    <button v-on:click="popup('Hi')">경고창 출력</button>
+                    methods:{
+                      popup : function(greeting){
+                        alert('인사:'+ greeting) ; //인사:Hi
+                      }
+                    }
+
+                ex 4) 이벤트변수 + 일반 파라미터 전달
+                    <button v-on:click="popup($event , 'Hi')">경고창 출력</button>
+                    methods:{
+                      popup : function(event , greeting){
+                        console.log(event); //vue 이벤트 객체 출력
+                        alert('인사:'+ greeting) ; //인사:Hi
+                      }
+                    }
+
+            </script>
+
+        6) v-model
+
+            이벤트 양방향 동기화 구현
             폼 태그 중 input select textarea 사용 가능
             폼 입력값을 뷰데이터와 즉시 동기화 한다
+
+              <div id="app">
+                <!--
+                  이벤트 양방향 동기화 구현 방식
+                  1. v-bind:value 와 v-on:keyup 구현 방식
+                  2. v-model 구현 방식
+
+                --->
+                <!--1. 수동으로 구현한 이벤트 양방향 동기화 -->
+                <input type="text" v-bind:value="message" v-on:keyup="syscText" />
+                <!--
+                    2. v-model 로 구현한 이벤트 양방향 동기화
+                    (단, 이 방식은 한글 입력시 다른 동기화 출력이 1문자 늦게 출력되는 버그가 있는 듯)
+                -->
+                <input type="text" v-model="message" />
+                <h3>{{message}}</h3>
+              </div>
+              <script>
+                new Vue({
+                  el: '#app',
+                  data:{
+                    message : ''
+                  },
+                  methods:{
+                    syscText(event){
+                      this.message = event.target.value;
+                    }
+                  }
+                });
+              </script>
+
+  4. 고급 템플릿 기법
+
+        1) computed 속성
+            메소드와는 다르게 캐싱된 결과를 유지한다.
+            변수처럼 사용한다, '()'를 사용하지 않음.
+
+            <div id="app">
+                 {{reverseMsg}}
+                 <button @click="change">변경</button>
+            </div>
+            <script>
+                var app = new Vue({
+                    el: '#app',
+                    data: {
+                        messages : '테스트'
+                    },
+                    methods:{
+                        change(){
+                            this.messages ="하루종일";
+                        }
+                    },
+                    computed:{
+                        reverseMsg:function(){
+                           return this.messages.split('').reverse().join('');
+                        }
+                    }
+                })
+            </script>
+
+
+        2) watch 속성
+
+            뷰데이터를 감시하다가 변경되면 실행되는 메소드
+            데이명과 일치하는 메소드명을 만들고 ('변경데이터'', '변경 전 데이터') 파라미터를 받는 메소드
+
+            <div id="app">
+              <p>{{message}}</p>
+              <button v-on:click="change">watch</button>
+            </div>
+            <script>
+
+              new Vue({
+                el: '#app',
+                data:{message : 'Hello'},
+                methods:{
+                  change : function(){
+                    this.message = 'change World!';
+                  }
+                },
+                watch:{
+                  message : function(newVal , oldVal){
+                    console.log('변경전:'+oldVal , ', 변경 후 :'+ newVal);
+                    // 변경전:Hello , 변경 후 :change World!
+                  }
+                }
+              });
+
+            </script>

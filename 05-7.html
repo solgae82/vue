@@ -1,0 +1,56 @@
+<html>
+<head>
+    <title>뷰템플릿 - (7)watch </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+
+</head>
+<body>
+  <!--
+  뷰데이터를 감시하다가 변경되면 실행되는 메소드
+  데이명과 일치하는 메소드명을 만들고 ('변경데이터'', '변경 전 데이터') 파라미터를 받는 메소드
+  -->
+  <div id="app">
+  <p>{{message}}</p>
+  <button v-on:click="change">watch</button>
+  </div>
+  <script>
+
+    new Vue({
+      el: '#app',
+      data:{message : 'Hello'},
+      methods:{
+        change : function(){
+          this.message = 'change World!';
+        }
+      },
+      watch:{
+        message : function(newVal , oldVal){
+          console.log('변경전:'+oldVal , ', 변경 후 :'+ newVal);
+          // 변경전:Hello , 변경 후 :change World!
+        }
+      }
+    });
+
+  </script>
+
+  <hr/>
+
+  <div id="app1">
+    <input v-model="message" />
+  </div>
+  <script>
+
+    new Vue({
+      el: '#app1',
+      data:{message : 'Hello'},
+      watch:{
+        message : function(newVal , oldVal){
+          console.log('변경전:'+oldVal , ', 변경 후 :'+ newVal);
+        }
+      }
+    });
+
+  </script>
+
+</body>
+</html>

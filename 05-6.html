@@ -1,0 +1,36 @@
+<html>
+<head>
+    <title>뷰템플릿 - (6)computed </title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+
+</head>
+<body>
+  <!--
+  메소드와는 다르게 캐싱된 결과를 유지한다.
+  변수처럼 사용한다, '()'를 사용하지 않음.
+  데이터가 변경되면 실시간 작동한다.캐싱 데이터가 있다면 그걸 사용한다
+  -->
+  <div id="app">
+  <p>{{reverseMsg}}</p>
+  <button v-on:click="changeWorld">change World!</button>
+  </div>
+  <script>
+
+    new Vue({
+      el: '#app',
+      data:{message : 'Hello'},
+      methods:{
+        changeWorld : function(){
+          this.message = 'change World!';
+        }
+      },
+      computed:{
+        reverseMsg : function(){
+          return this.message.split('').reverse().join('');
+        }
+      }
+    });
+
+  </script>
+</body>
+</html>
